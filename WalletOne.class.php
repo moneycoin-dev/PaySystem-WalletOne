@@ -17,7 +17,6 @@ class WalletOne
 		$this->SetParam('WMI_PAYMENT_AMOUNT',$amount);
 		$this->SetParam('WMI_CURRENCY_ID',643);
 		$this->SetParam('WMI_PAYMENT_NO',$payId);
-		$this->SetParam('WMI_DESCRIPTION','BASE64:'.base64_encode('YOU DESCRIPTION'));
 		$this->SetParam('WMI_SUCCESS_URL','http://'.$_SERVER['HTTP_HOST']);
 		$this->SetParam('WMI_FAIL_URL','http://'.$_SERVER['HTTP_HOST']);
 		$this->SetParam('WMI_AutoLocation',0);
