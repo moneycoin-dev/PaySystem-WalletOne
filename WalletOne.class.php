@@ -10,15 +10,14 @@ class WalletOne
             $this->__Merchant_Id = $merchant_id;
             $this->__Merchant_SecretKey = $secret_key;
         }
-	public function main($userdata,$payId,$amount)
+	public function Pay($payId,$amount)
 	{
 		global $conf;
 		$this->SetParam('WMI_MERCHANT_ID',$this->__Merchant_Id);
 		$this->SetParam('WMI_PAYMENT_AMOUNT',$amount);
 		$this->SetParam('WMI_CURRENCY_ID',643);
 		$this->SetParam('WMI_PAYMENT_NO',$payId);
-		$this->SetParam('WMI_DESCRIPTION','BASE64:'.base64_encode($userdata['username'].' пополнение баланса ('.$userdata['balance'].' руб.)'));
-		$this->SetParam('WMI_CUSTOMER_EMAIL',$userdata['email']);
+		$this->SetParam('WMI_DESCRIPTION','BASE64:'.base64_encode('YOU DESCRIPTION'));
 		$this->SetParam('WMI_SUCCESS_URL','http://'.$_SERVER['HTTP_HOST']);
 		$this->SetParam('WMI_FAIL_URL','http://'.$_SERVER['HTTP_HOST']);
 		$this->SetParam('WMI_AutoLocation',0);
@@ -70,12 +69,17 @@ class WalletOne
 		}
 		$this->sortParams();
 		$Signature = $this->GenerateSignature();
-		if($this->FormParams["WMI_ORDER_STATE"] == 'Accepted'){
+                if($Signature == $_POST["WMI_SIGNATURE"]){
+                    if($this->FormParams["WMI_ORDER_STATE"] == 'Accepted'){
 			$this->__callback["Status"] = 1;
 			$this->__callback["text"] = 'WMI_RESULT=OK';
-		}else{
-			$this->__callback["Status"] = 2;
-		}
+                    }else{
+                            $this->__callback["Status"] = 2;
+                    }
+                }else{
+                    $this->__callback["Status"] = 2;
+                }
+		
 	}
 	
 	public function callback()
