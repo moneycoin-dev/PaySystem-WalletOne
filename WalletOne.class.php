@@ -26,7 +26,7 @@ class WalletOne
 		$this->SetParam('WMI_SIGNATURE',$Signature);
 	}
 	
-	private function SetParam($name,$value)
+	public function SetParam($name,$value)
 	{
 		$this->FormParams[$name] = $value;
 	}

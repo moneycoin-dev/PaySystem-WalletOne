@@ -20,8 +20,16 @@ $payAmount = 30;
 //Страница оплаты
 if(isset($_GET['pay'])){
     
+    //Для установки своего параметра можно использовать метод SetParam
+    //ВНИМАНИЕ!! Данный метод должен вызыватся перед вызовом метода Pay и form!
+    
+    $WalletOne->SetParam('WMI_DESCRIPTION','BASE64:'.base64_encode('Ваше описание'));
+    
+    
     //Генерируем Платёжную форму
     $WalletOne->Pay($payId,$payAmount);
+    
+   
     
     //Выводит платёжную форму
     print $WalletOne->form();
